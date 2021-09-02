@@ -47,7 +47,7 @@ func main() {
 		"lebar":   4,
 		"tinggi":  6,
 	}
-	satuan["luas"] = satuan["panjang"] * satuan["lebar"] * satuan["tinggi"]
+	satuan["Volume Balok"] = satuan["panjang"] * satuan["lebar"] * satuan["tinggi"]
 	for satu := range satuan {
 		fmt.Println(satu, "=", satuan[satu])
 	}
