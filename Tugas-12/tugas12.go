@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strconv"
 	"sync"
+	"time"
 )
 
 func main() {
@@ -16,7 +17,7 @@ func main() {
 	sort.Strings(phones)
 
 	var printPhone = func(result string) {
-		//time.Sleep(1 * time.Second)
+		time.Sleep(1 * time.Second)
 		fmt.Println(result)
 		wg.Done()
 	}
