@@ -33,12 +33,11 @@ func main() {
 	fmt.Println("Success")
 
 	// router
-	router := httprouter.New()
 	http.Handle("/", auth(http.HandlerFunc(nilaiRoute)))
 
 	// serve
 	fmt.Println("Server Running at Port 8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func nilaiRoute(w http.ResponseWriter, r *http.Request) {
