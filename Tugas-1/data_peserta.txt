@@ -1,6 +1,0 @@
-Data Peserta Jabar Coding Camp Golang
-1. Nama: Irfan Yasir A S
-2. Email: irfanyasiras@gmail.com
-3. Sistem Operasi yang digunakan: Win 10
-4. Akun Gitlab/Github: @ifnyas
-5. Akun Telegram: @ifnyas
