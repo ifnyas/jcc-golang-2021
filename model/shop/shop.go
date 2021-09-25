@@ -31,11 +31,11 @@ const (
 
 func PostDb(ctx context.Context, item Shop) error {
 	queryText := fmt.Sprintf(
-		`INSERT INTO %v (
-			'user_id', tag, 'name', detail,
-			image_url, phone, email, 'address',
-			is_active, created_at, updated_at
-		) values(%v, '%v','%v', '%v', '%v', '%v', '%v', '%v', %v, NOW(), NOW())`,
+		"INSERT INTO %v ("+
+			"`user_id`, tag, `name`, detail,"+
+			"image_url, phone, email, `address`,"+
+			"is_active, created_at, updated_at) "+
+			"values(%v, '%v','%v', '%v', '%v', '%v', '%v', '%v', %v, NOW(), NOW())",
 		table,
 		item.UserId,
 		item.Tag,
@@ -53,17 +53,17 @@ func PostDb(ctx context.Context, item Shop) error {
 
 func PutDb(ctx context.Context, item Shop) error {
 	queryText := fmt.Sprintf(
-		`UPDATE %v set 
-		'user_id' = %v,
-		'name' = '%v',
-		detail = '%v',
-		image_url = '%v',
-		phone = '%v',
-		email = '%v',
-		'address' = '%v',
-		is_active = %v,
-		updated_at = NOW() 
-		where id = %v`,
+		"UPDATE %v set "+
+			"`user_id` = %v,"+
+			"`name` = '%v',"+
+			"detail = '%v',"+
+			"image_url = '%v',"+
+			"phone = '%v',"+
+			"email = '%v',"+
+			"`address` = '%v',"+
+			"is_active = %v,"+
+			"updated_at = NOW() "+
+			"where id = %v",
 		table,
 		item.UserId,
 		item.Name,
