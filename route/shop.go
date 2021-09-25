@@ -27,10 +27,11 @@ func PostShop(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	item.Email = r.PostFormValue("email")
 	item.Address = r.PostFormValue("address")
 
+	var theUser []user.User
 	formUserId := r.PostFormValue("user_id")
 	formUserIdInt, err := strconv.Atoi(formUserId)
 	if err != nil || formUserId == "" {
-		theUser := user.GetByBasicAuth(ctx, r)
+		theUser = user.GetByBasicAuth(ctx, r)
 		if theUser != nil {
 			formUserIdInt = theUser[0].ID
 		}
