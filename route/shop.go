@@ -36,6 +36,9 @@ func PostShop(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			formUserIdInt = theUser[0].ID
 		}
 	}
+	if theUser[0].RoleId != 1 && theUser[0].ID != formUserIdInt {
+		formUserIdInt = theUser[0].ID
+	}
 	item.UserId = formUserIdInt
 
 	// check tag not used
