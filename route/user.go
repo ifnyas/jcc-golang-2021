@@ -316,7 +316,6 @@ func PostUserRegister(w http.ResponseWriter, r *http.Request, p httprouter.Param
 	session.PostDb(ctx, newSession)
 }
 
-/*
 func Login(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// init
 	var code int
@@ -359,4 +358,3 @@ func Login(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// result
 	util.ResponseJSON(w, res, code)
 }
-*/

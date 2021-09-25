@@ -39,6 +39,7 @@ func main() {
 
 	// user
 	router.POST("/api/user/register", route.PostUserRegister)
+	//router.GET("/api/user", route.GetUserAll)
 	router.GET("/api/user/:id", route.GetUser)
 	router.PUT("/api/user/:id", route.PutUser)
 	router.PUT("/api/user/:id/reset-pass", route.ResetPass)
@@ -78,10 +79,8 @@ func main() {
 	router.DELETE("/api/cart/:id", route.DelCart)
 
 	// not used
-	/*
-		router.POST("/api/session", route.PostSession)
-		router.POST("/api/login", route.Login)
-	*/
+	//router.POST("/api/session", route.PostSession)
+	router.POST("/api/login", route.Login)
 
 	// port check
 	port := os.Getenv("PORT")

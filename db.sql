@@ -9,6 +9,7 @@ CREATE TABLE db_golang_yasir.t_user (
     email VARCHAR(255) not null,
     `address` VARCHAR(255) not null,
     role_id INT not null,
+    is_active INT not null,
     created_at DATETIME not null,
     updated_at DATETIME not null
 );
@@ -94,7 +95,7 @@ CREATE TABLE db_golang_yasir.t_cart (
 );
 
 
-INSERT INTO db_golang_yasir.t_user (username, `password`, full_name, birth_date, image_url, phone, email, `address`, `role_id`, created_at, updated_at) values('master', '123456', 'Irfan Yas', '1995-08-02', 'https://ui-avatars.com/api/?name=Irfan%20Yas&background=random', '085155112341', 'irfanyasiras@gmail.com', 'Kota Bandung', 1, NOW(), NOW());
+INSERT INTO db_golang_yasir.t_user (username, `password`, full_name, birth_date, image_url, phone, email, `address`, `role_id`, is_active, created_at, updated_at) values('master', '$2a$10$brdQAGKIU1wq5Wq2kUzZ..XWIYZRWyb9GladTwHIIqDPhMOm/WWpS', 'Irfan Yas', '1995-08-02', 'https://ui-avatars.com/api/?name=Irfan%20Yas&background=random', '085155112341', 'irfanyasiras@gmail.com', 'Kota Bandung', 1, 1, NOW(), NOW());
 INSERT INTO db_golang_yasir.t_role (title, detail, created_at, updated_at) values('ADMIN', 'Role for developer', NOW(), NOW());
 INSERT INTO db_golang_yasir.t_role (title, detail, created_at, updated_at) values('USER', 'Role for customers and sellers', NOW(), NOW());
 INSERT INTO db_golang_yasir.t_status (title, detail, created_at, updated_at) values('CART', 'Masih dalam keranjang pembeli', NOW(), NOW());

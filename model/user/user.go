@@ -151,7 +151,8 @@ func GetByUsernameDb(ctx context.Context, username string) ([]User, error) {
 	for rowQuery.Next() {
 		var item User
 		var createdAt, updatedAt string
-		if err = rowQuery.Scan(&item.ID,
+		if err = rowQuery.Scan(
+			&item.ID,
 			&item.Username,
 			&item.Password,
 			&item.FullName,
@@ -160,8 +161,8 @@ func GetByUsernameDb(ctx context.Context, username string) ([]User, error) {
 			&item.Phone,
 			&item.Email,
 			&item.Address,
-			&item.IsActive,
 			&item.RoleId,
+			&item.IsActive,
 			&createdAt,
 			&updatedAt); err != nil {
 			return nil, err
@@ -205,7 +206,8 @@ func GetByIdDb(ctx context.Context, id int) ([]User, error) {
 	for rowQuery.Next() {
 		var item User
 		var createdAt, updatedAt string
-		if err = rowQuery.Scan(&item.ID,
+		if err = rowQuery.Scan(
+			&item.ID,
 			&item.Username,
 			&item.Password,
 			&item.FullName,
@@ -214,8 +216,8 @@ func GetByIdDb(ctx context.Context, id int) ([]User, error) {
 			&item.Phone,
 			&item.Email,
 			&item.Address,
-			&item.IsActive,
 			&item.RoleId,
+			&item.IsActive,
 			&createdAt,
 			&updatedAt); err != nil {
 			return nil, err
