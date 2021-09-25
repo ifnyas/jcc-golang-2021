@@ -242,7 +242,7 @@ func ResetPass(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	// put data
-	if err := user.PutDb(ctx, theUser[0]); err != nil {
+	if err := user.ResetPassDb(ctx, theUser[0]); err != nil {
 		util.ResponseJSON(w, err, http.StatusInternalServerError)
 		return
 	}
