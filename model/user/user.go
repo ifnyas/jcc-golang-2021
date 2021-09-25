@@ -45,6 +45,10 @@ func GetByBasicAuth(ctx context.Context, r *http.Request) []User {
 		if passDecryptErr != nil {
 			return nil
 		}
+
+		if theUser[0].IsActive == 0 {
+			return nil
+		}
 	}
 	return theUser
 }
@@ -247,6 +251,10 @@ func IsBasicAuthValid(rule int, userIdNeeded int, r *http.Request, ctx context.C
 	userAuth, passAuth, okAuth := r.BasicAuth()
 	theUser, err := GetByUsernameDb(ctx, userAuth)
 	if err == nil && theUser != nil && okAuth {
+		if theUser[0].IsActive == 0 {
+			return false
+		}
+
 		passDecrypt := bcrypt.CompareHashAndPassword(
 			[]byte(theUser[0].Password),
 			[]byte(passAuth))
