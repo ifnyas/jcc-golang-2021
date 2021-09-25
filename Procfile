@@ -1,1 +1,1 @@
-web: bin/api-mysql
+web: bin/jcc-golang-2021

@@ -33,12 +33,6 @@ func main() {
 	}
 	fmt.Println("DB connected!")
 
-	// port check
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
 	// routes
 	router := httprouter.New()
 	router.NotFound = http.FileServer(http.Dir("Public"))
@@ -88,6 +82,12 @@ func main() {
 		router.POST("/api/session", route.PostSession)
 		router.POST("/api/login", route.Login)
 	*/
+
+	// port check
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
 	// serve
 	fmt.Println("Server Running at Port 8080")
