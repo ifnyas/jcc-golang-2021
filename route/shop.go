@@ -12,7 +12,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func PostShopRegister(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func PostShop(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// context
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -208,7 +208,8 @@ func GetShop(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// get id
 	itemId, err := strconv.Atoi(p.ByName("id"))
 	if err != nil {
-		itemId = -1
+		util.ResponseJSON(w, err, http.StatusBadRequest)
+		return
 	}
 
 	// check auth
@@ -228,6 +229,19 @@ func GetShop(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	// result
 	items, err := shop.GetByIdDb(ctx, itemId)
+	if err != nil {
+		fmt.Println(err)
+	}
+	util.ResponseJSON(w, items, http.StatusOK)
+}
+
+func GetShopAll(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	// context
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// result
+	items, err := shop.GetDb(ctx)
 	if err != nil {
 		fmt.Println(err)
 	}

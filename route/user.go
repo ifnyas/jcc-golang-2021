@@ -252,7 +252,7 @@ func ResetPass(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	util.ResponseJSON(w, res, http.StatusOK)
 }
 
-func PostUserRegister(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func PostUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// context
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

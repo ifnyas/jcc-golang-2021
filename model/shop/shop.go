@@ -197,3 +197,48 @@ func GetByIdDb(ctx context.Context, id int) ([]Shop, error) {
 	}
 	return items, nil
 }
+
+func GetDb(ctx context.Context) ([]Shop, error) {
+	// get rows
+	queryText := fmt.Sprintf(
+		"SELECT * FROM %v", table)
+
+	rowQuery, err := util.QueryDb(ctx, queryText)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// parse rows
+	var items []Shop
+	for rowQuery.Next() {
+		var item Shop
+		var createdAt, updatedAt string
+		if err = rowQuery.Scan(&item.ID,
+			&item.Tag,
+			&item.Name,
+			&item.Detail,
+			&item.ImageUrl,
+			&item.Phone,
+			&item.Email,
+			&item.Address,
+			&item.IsActive,
+			&item.UserId,
+			&createdAt,
+			&updatedAt); err != nil {
+			return nil, err
+		}
+
+		item.CreatedAt, err = time.Parse(util.LayoutDateTime, createdAt)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		item.UpdatedAt, err = time.Parse(util.LayoutDateTime, updatedAt)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		items = append(items, item)
+	}
+	return items, nil
+}

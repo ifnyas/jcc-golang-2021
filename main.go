@@ -38,7 +38,7 @@ func main() {
 	router.NotFound = http.FileServer(http.Dir("Public"))
 
 	// user
-	router.POST("/api/user/register", route.PostUserRegister)
+	router.POST("/api/user", route.PostUser)
 	router.GET("/api/user", route.GetUserAll)
 	router.GET("/api/user/:id", route.GetUser)
 	router.PUT("/api/user/:id", route.PutUser)
@@ -49,7 +49,8 @@ func main() {
 	router.GET("/api/role", route.GetRole)
 
 	// shop
-	router.POST("/api/shop/register", route.PostShopRegister)
+	router.POST("/api/shop", route.PostShop)
+	router.GET("/api/shop", route.GetShopAll)
 	router.GET("/api/shop/:id", route.GetShop)
 	router.PUT("/api/shop/:id", route.PutShop)
 	router.PUT("/api/shop/:id/toggle-active", route.PutShopToggleActive)
