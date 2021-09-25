@@ -51,10 +51,10 @@ func GetByBasicAuth(ctx context.Context, r *http.Request) []User {
 
 func PostDb(ctx context.Context, item User) error {
 	queryText := fmt.Sprintf(
-		`INSERT INTO %v (
-			username, 'password', role_id, full_name, birth_date,
-			image_url, phone, email, 'address', is_active, created_at, updated_at
-		) values('%v','%v', %v,'%v','%v','%v','%v','%v','%v', 1, NOW(), NOW())`,
+		"INSERT INTO %v ("+
+			"username, `password`, role_id, full_name, birth_date,"+
+			"image_url, phone, email, `address`, is_active, created_at, updated_at) "+
+			"values('%v','%v', %v,'%v','%v','%v','%v','%v','%v', 1, NOW(), NOW())",
 		table,
 		item.Username,
 		item.Password,
@@ -72,15 +72,15 @@ func PostDb(ctx context.Context, item User) error {
 
 func PutDb(ctx context.Context, item User) error {
 	queryText := fmt.Sprintf(
-		`UPDATE %v set 
-		full_name = '%v',
-		birth_date = '%v',
-		image_url = '%v',
-		phone = '%v',
-		email = '%v',
-		'address' = '%v',
-		updated_at = NOW() 
-		where id = %v`,
+		"UPDATE %v set "+
+			"full_name = '%v',"+
+			"birth_date = '%v',"+
+			"image_url = '%v',"+
+			"phone = '%v',"+
+			"email = '%v',"+
+			"`address` = '%v',"+
+			"updated_at = NOW() "+
+			"where id = %v",
 		table,
 		item.FullName,
 		item.BirthDate,
@@ -96,7 +96,7 @@ func PutDb(ctx context.Context, item User) error {
 
 func ResetPassDb(ctx context.Context, item User) error {
 	queryText := fmt.Sprintf(
-		`UPDATE %v set 'password' = '%v', updated_at = NOW() where id = %v`,
+		"UPDATE %v set `password` = '%v', updated_at = NOW() where id = %v",
 		table,
 		item.Password,
 		item.ID,
@@ -107,7 +107,7 @@ func ResetPassDb(ctx context.Context, item User) error {
 
 func DeactivateDb(ctx context.Context, id int) error {
 	queryText := fmt.Sprintf(
-		`UPDATE %v set is_active = 0, updated_at = NOW() where id = %v`,
+		"UPDATE %v set is_active = 0, updated_at = NOW() where id = %v",
 		table,
 		id,
 	)

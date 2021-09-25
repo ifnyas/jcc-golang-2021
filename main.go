@@ -90,6 +90,6 @@ func main() {
 	}
 
 	// serve
-	fmt.Println("Server Running at Port 8080")
+	fmt.Println("Server Running at Port " + port)
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }
