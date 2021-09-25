@@ -1,0 +1,75 @@
+t_user, t_role, t_shop, t_product, 
+t_review, t_session, t_status, t_cart
+
+rules:
+- username, shop tag, and role can't be changed
+- user and shop can't be deleted, only deactivated
+- username, shop tag must be unique
+- product can't be deleted, only empty stock
+- currency only IDR
+- get review must be id or product_id. get all only for admin
+- session can't be deleted
+- new session auto created after user registered or user send a session
+
+t_user:
+role_id @
+username
+password
+full_name
+birth_date
+image_url
+phone
+email
+address
+is_active
+
+t_role:
+title
+detail
+
+t_shop :
+user_id @
+tag
+name
+detail
+phone
+email
+address
+image_url
+is_open
+
+t_product:
+shop_id @
+name
+detail
+price
+category
+image_url
+stock
+
+t_review:
+user_id @
+product_id @
+rating
+note
+response
+media_url
+
+t_session:
+courier_name
+delivery_cost
+user_id @
+status_id @
+note
+
+t_status:
+title
+detail
+
+t_cart:
+session_id @
+product_name
+product_price
+product_price_mod
+amount
+note
