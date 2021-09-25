@@ -29,19 +29,13 @@ func PostShop(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	formUserId := r.PostFormValue("user_id")
 	formUserIdInt, err := strconv.Atoi(formUserId)
-	if err != nil {
-		util.ResponseJSON(w, err, http.StatusBadRequest)
-		return
-	}
-	item.UserId = formUserIdInt
-
-	// get user_id
-	theUser := user.GetByBasicAuth(ctx, r)
-	if formUserId == "" {
+	if err != nil || formUserId == "" {
+		theUser := user.GetByBasicAuth(ctx, r)
 		if theUser != nil {
-			item.UserId = theUser[0].ID
+			formUserIdInt = theUser[0].ID
 		}
 	}
+	item.UserId = formUserIdInt
 
 	// check tag not used
 	isShopExisted, err := shop.GetByTagDb(ctx, item.Tag)
