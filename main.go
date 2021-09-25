@@ -39,7 +39,7 @@ func main() {
 
 	// user
 	router.POST("/api/user/register", route.PostUserRegister)
-	//router.GET("/api/user", route.GetUserAll)
+	router.GET("/api/user", route.GetUserAll)
 	router.GET("/api/user/:id", route.GetUser)
 	router.PUT("/api/user/:id", route.PutUser)
 	router.PUT("/api/user/:id/reset-pass", route.ResetPass)
