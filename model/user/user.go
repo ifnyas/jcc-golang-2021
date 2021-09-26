@@ -265,15 +265,18 @@ func IsBasicAuthValid(rule int, userIdNeeded int, r *http.Request, ctx context.C
 
 		switch rule {
 		case 2: // creator
+			fmt.Println(theUser[0].ID, userIdNeeded)
 			if theUser[0].ID == userIdNeeded {
 				isAuthValid = true
 			}
 			fallthrough
 		default: // admin
+			fmt.Println(theUser[0].RoleId)
 			if theUser[0].RoleId == 1 {
 				isAuthValid = true
 			}
 		}
 	}
+	fmt.Println(isAuthValid, isUserValid)
 	return isAuthValid && isUserValid
 }

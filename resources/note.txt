@@ -1,15 +1,16 @@
-t_user, t_role, t_shop, t_product, 
-t_review, t_session, t_status, t_cart
+tables:
+t_user, t_role, t_shop, t_product, t_review, t_session, t_status, t_cart
 
 rules:
 - username, shop tag, and role can't be changed
 - user and shop can't be deleted, only deactivated
-- username, shop tag must be unique
+- username and shop's tag must be unique
 - product can't be deleted, only empty stock
 - currency only IDR
-- get review must be id or product_id. get all only for admin
 - session can't be deleted
-- new session auto created after user registered or user send a session
+- new session auto created after user registered or user update a session from CART
+- session status can't be updated to CART
+- review's rating between 1-5
 
 t_user:
 role_id @

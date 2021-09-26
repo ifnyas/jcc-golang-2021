@@ -65,7 +65,7 @@ func PostReview(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	// check auth
-	if user.IsBasicAuthValid(2, item.UserId, r, ctx) {
+	if !user.IsBasicAuthValid(2, item.UserId, r, ctx) {
 		err := map[string]string{
 			"status": "Unauthorized!",
 		}
