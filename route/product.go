@@ -160,6 +160,34 @@ func PutProduct(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	util.ResponseJSON(w, res, http.StatusOK)
 }
 
+func GetProductAll(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	// context
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// get param
+	shopIdParam := r.URL.Query().Get("shop_id")
+	shopIdInt, _ := strconv.Atoi(shopIdParam)
+
+	// query
+	var items []product.Product
+	var err error
+	if shopIdInt != 0 {
+		items, err = product.GetByShopIdDb(ctx, shopIdInt)
+		if err != nil {
+			fmt.Println(err)
+		}
+	} else {
+		items, err = product.GetByIdDb(ctx, -1)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	// result
+	util.ResponseJSON(w, items, http.StatusOK)
+}
+
 func GetProduct(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// context
 	ctx, cancel := context.WithCancel(context.Background())
@@ -176,21 +204,6 @@ func GetProduct(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	// check auth
-	/*
-		rule := 2
-		if itemId < 0 {
-			rule = 1
-		}
-		if !isProductBasicAuthValid(rule, items[0], r, ctx) {
-			err := map[string]string{
-				"status": "Unauthorized!",
-			}
-			util.ResponseJSON(w, err, http.StatusUnauthorized)
-			return
-		}
-	*/
 
 	// result
 	util.ResponseJSON(w, items, http.StatusOK)

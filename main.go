@@ -57,6 +57,7 @@ func main() {
 
 	// product
 	router.POST("/api/product", route.PostProduct)
+	router.GET("/api/product", route.GetProductAll)
 	router.GET("/api/product/:id", route.GetProduct)
 	router.PUT("/api/product/:id", route.PutProduct)
 
