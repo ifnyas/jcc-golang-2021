@@ -284,7 +284,7 @@ func GetReview(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		util.ResponseJSON(w, err, http.StatusNotFound)
 		return
 	}
-	if err == nil {
+	if err != nil {
 		util.ResponseJSON(w, err, http.StatusInternalServerError)
 		return
 	}
