@@ -26,20 +26,32 @@ func PostShop(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	item.Phone = r.PostFormValue("phone")
 	item.Email = r.PostFormValue("email")
 	item.Address = r.PostFormValue("address")
+	item.IsActive = 1
 
-	var theUser []user.User
+	theUser := user.GetByBasicAuth(ctx, r)
+	if theUser != nil {
+		item.UserId = theUser[0].ID
+	} else {
+		err := map[string]string{
+			"status": "Unauthorized!",
+		}
+		util.ResponseJSON(w, err, http.StatusUnauthorized)
+		return
+	}
+
 	formUserId := r.PostFormValue("user_id")
 	formUserIdInt, err := strconv.Atoi(formUserId)
-	if err != nil || formUserId == "" {
-		theUser = user.GetByBasicAuth(ctx, r)
-		if theUser != nil {
-			formUserIdInt = theUser[0].ID
+	if err == nil && theUser[0].RoleId == 1 {
+		item.UserId = formUserIdInt
+	}
+	fmt.Println(item.UserId, formUserIdInt)
+	if theUser[0].RoleId != 1 && item.UserId != formUserIdInt && formUserIdInt != 0 {
+		err := map[string]string{
+			"status": "Unauthorized!",
 		}
+		util.ResponseJSON(w, err, http.StatusUnauthorized)
+		return
 	}
-	if theUser[0].RoleId != 1 && theUser[0].ID != formUserIdInt {
-		formUserIdInt = theUser[0].ID
-	}
-	item.UserId = formUserIdInt
 
 	// check tag not used
 	isShopExisted, err := shop.GetByTagDb(ctx, item.Tag)
@@ -56,7 +68,7 @@ func PostShop(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	// check auth
-	if theUser == nil {
+	if !user.IsBasicAuthValid(2, item.UserId, r, ctx) {
 		err := map[string]string{
 			"status": "Unauthorized!",
 		}
