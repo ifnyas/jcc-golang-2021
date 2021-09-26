@@ -35,7 +35,7 @@ func main() {
 
 	// routes
 	router := httprouter.New()
-	router.NotFound = http.FileServer(http.Dir("/static"))
+	router.NotFound = http.RedirectHandler("/static", http.StatusMovedPermanently)
 	router.ServeFiles("/static/*filepath", http.Dir("static"))
 
 	// user
