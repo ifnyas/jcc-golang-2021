@@ -185,19 +185,48 @@ func GetCart(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// get id
 	itemId, err := strconv.Atoi(p.ByName("id"))
 	if err != nil {
-		itemId = -1
-	}
-
-	// get param
-	sessionIdParam := r.URL.Query().Get("session_id")
-	if itemId != -1 {
-		sessionIdParam = ""
+		util.ResponseJSON(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	// query
+	items, err := cart.GetByIdDb(ctx, itemId)
+	if items == nil {
+		err := map[string]string{
+			"status": "Session not found!",
+		}
+		util.ResponseJSON(w, err, http.StatusNotFound)
+		return
+	}
+	if err != nil {
+		util.ResponseJSON(w, err, http.StatusInternalServerError)
+		return
+	}
+
+	// check auth
+	if !isCartBasicAuthValid(r, ctx, 2, items[0].SessionId) {
+		util.ResponseJSON(w, err, http.StatusUnauthorized)
+		return
+	}
+
+	// result
+	util.ResponseJSON(w, items, http.StatusOK)
+}
+
+func GetCartAll(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	// context
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// get param
+	var sessionIdInt int
+	sessionIdParam := r.URL.Query().Get("session_id")
+
+	// query
 	var items []cart.Cart
+	var err error
 	if sessionIdParam == "" {
-		items, err = cart.GetByIdDb(ctx, itemId)
+		items, err = cart.GetByIdDb(ctx, -1)
 		if items == nil {
 			err := map[string]string{
 				"status": "Cart not found!",
@@ -210,7 +239,7 @@ func GetCart(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			return
 		}
 	} else {
-		sessionIdInt, err := strconv.Atoi(sessionIdParam)
+		sessionIdInt, err = strconv.Atoi(sessionIdParam)
 		if err != nil {
 			util.ResponseJSON(w, err, http.StatusBadRequest)
 			return
@@ -231,7 +260,7 @@ func GetCart(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	// check auth
 	rule := 2
-	if itemId < 0 && sessionIdParam == "" {
+	if sessionIdParam == "" {
 		rule = 1
 	}
 	if !isCartBasicAuthValid(r, ctx, rule, items[0].SessionId) {
