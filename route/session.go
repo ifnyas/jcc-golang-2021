@@ -39,27 +39,8 @@ func PutSession(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// parse form
 	formCourier := r.PostFormValue("courier")
 	formNote := r.PostFormValue("note")
-
 	formDeliveryCost := r.PostFormValue("delivery_cost")
-	formDeliveryCostInt, err := strconv.ParseFloat(formDeliveryCost, 64)
-	if err != nil {
-		util.ResponseJSON(w, err, http.StatusBadRequest)
-		return
-	}
-
 	formStatusId := r.PostFormValue("status_id")
-	formStatusIdInt, err := strconv.Atoi(formStatusId)
-	if err != nil {
-		util.ResponseJSON(w, err, http.StatusBadRequest)
-		return
-	}
-	if formStatusIdInt == 0 {
-		err := map[string]string{
-			"status": "status_id tidak boleh 0!",
-		}
-		util.ResponseJSON(w, err, http.StatusUnauthorized)
-		return
-	}
 
 	// update value
 	if formCourier != "" {
@@ -69,9 +50,26 @@ func PutSession(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		theItem[0].Note = formNote
 	}
 	if formDeliveryCost != "" {
+		formDeliveryCostInt, err := strconv.ParseFloat(formDeliveryCost, 64)
+		if err != nil {
+			util.ResponseJSON(w, err, http.StatusBadRequest)
+			return
+		}
 		theItem[0].DeliveryCost = formDeliveryCostInt
 	}
 	if formStatusId != "" {
+		formStatusIdInt, err := strconv.Atoi(formStatusId)
+		if err != nil {
+			util.ResponseJSON(w, err, http.StatusBadRequest)
+			return
+		}
+		if formStatusIdInt == 0 {
+			err := map[string]string{
+				"status": "status_id can't be zero!",
+			}
+			util.ResponseJSON(w, err, http.StatusUnauthorized)
+			return
+		}
 		theItem[0].StatusId = formStatusIdInt
 	}
 
