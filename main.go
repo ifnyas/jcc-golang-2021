@@ -68,12 +68,13 @@ func main() {
 	router.PUT("/api/review/:id", route.PutReview)
 	router.PUT("/api/review/:id/response", route.PutResponse)
 
-	// session
-	router.GET("/api/session/:id", route.GetSession)
-	router.PUT("/api/session/:id", route.PutSession)
-
 	// status
 	router.GET("/api/status", route.GetStatus)
+
+	// session
+	//router.GET("/api/session", route.GetSessionAll)
+	router.GET("/api/session/:id", route.GetSession)
+	router.PUT("/api/session/:id", route.PutSession)
 
 	// cart
 	router.POST("/api/cart", route.PostCart)

@@ -7,7 +7,6 @@ import (
 	"jcc-golang-2021/model/user"
 	"jcc-golang-2021/util"
 	"net/http"
-	"strconv"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -16,12 +15,6 @@ func GetStatus(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// context
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-
-	// get id
-	itemId, err := strconv.Atoi(p.ByName("id"))
-	if err != nil {
-		itemId = -1
-	}
 
 	// check auth
 	if !user.IsBasicAuthValid(1, 0, r, ctx) {
@@ -33,7 +26,7 @@ func GetStatus(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	// query
-	items, err := status.GetByIdDb(ctx, itemId)
+	items, err := status.GetByIdDb(ctx, -1)
 	if err != nil {
 		fmt.Println(err)
 	}
