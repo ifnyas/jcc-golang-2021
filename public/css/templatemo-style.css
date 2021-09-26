@@ -92,7 +92,7 @@ a:focus {
 }
 
 .overlay {
-  background: linear-gradient(to top right, #81d4fa, #000000);
+  background: linear-gradient(to top right, #2196f3, #000000);
   opacity: 0.9;
   position: absolute;
   top: 0;
@@ -145,7 +145,7 @@ a:focus {
   position: absolute;
   top: 12px;
   right: 12px;
-  color: #81d4fa;
+  color: #2196f3;
   font-size: 20px;
 }
 
@@ -304,7 +304,7 @@ a:focus {
 
 .menu-items ul.menu li a:hover:after {
   content: "";
-  background: #81d4fa;
+  background: #2196f3;
   width: 100%;
 }
 
@@ -416,7 +416,7 @@ address p {
 }
 
 .social-icon li a:hover {
-  background: #81d4fa;
+  background: #2196f3;
   color: #ffffff;
 }
 
