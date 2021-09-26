@@ -29,13 +29,14 @@ const (
 func PostDb(ctx context.Context, item Review) error {
 	queryText := fmt.Sprintf(
 		"INSERT INTO %v ("+
-			"note, media_url, rating, user_id,"+
+			"note, media_url, rating, product_id, user_id,"+
 			"created_at, updated_at"+
-			") values('%v','%v', %v, %v, NOW(), NOW())",
+			") values('%v','%v', %v, %v, %v, NOW(), NOW())",
 		table,
 		item.Note,
 		item.MediaUrl,
 		item.Rating,
+		item.ProductId,
 		item.UserId,
 	)
 	_, err := util.ExecDb(ctx, queryText)

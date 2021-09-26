@@ -36,6 +36,13 @@ func PostReview(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 	item.Rating = formRating
 
+	formProductId, err := strconv.Atoi(r.PostFormValue("product_id"))
+	if err != nil {
+		util.ResponseJSON(w, err, http.StatusBadRequest)
+		return
+	}
+	item.ProductId = formProductId
+
 	formUserId := r.PostFormValue("user_id")
 	if formUserId != "" {
 		formUserIdInt, err := strconv.Atoi(formUserId)
