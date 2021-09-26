@@ -78,6 +78,7 @@ func main() {
 
 	// cart
 	router.POST("/api/cart", route.PostCart)
+	router.GET("/api/cart", route.GetCartAll)
 	router.GET("/api/cart/:id", route.GetCart)
 	router.PUT("/api/cart/:id", route.PutCart)
 	router.DELETE("/api/cart/:id", route.DelCart)

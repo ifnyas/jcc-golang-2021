@@ -28,10 +28,10 @@ const (
 
 func PostDb(ctx context.Context, item Cart) error {
 	queryText := fmt.Sprintf(
-		`INSERT INTO %v (
-			product_name, note, product_price, product_price_mod,
-			amount, session_id, created_at, updated_at
-		) values('%v','%v', %v, %v, %v, %v, NOW(), NOW())`,
+		"INSERT INTO %v ("+
+			"product_name, note, product_price, product_price_mod,"+
+			"amount, session_id, created_at, updated_at"+
+			") values('%v','%v', %v, %v, %v, %v, NOW(), NOW())",
 		table,
 		item.ProductName,
 		item.Note,
@@ -46,12 +46,12 @@ func PostDb(ctx context.Context, item Cart) error {
 
 func PutDb(ctx context.Context, item Cart) error {
 	queryText := fmt.Sprintf(
-		`UPDATE %v set 
-		note = '%v',
-		product_price_mod = %v,
-		amount = %v,
-		updated_at = NOW() 
-		where id = %v`,
+		"UPDATE %v set "+
+			"note = '%v',"+
+			"product_price_mod = %v,"+
+			"amount = %v,"+
+			"updated_at = NOW() "+
+			"where id = %v",
 		table,
 		item.Note,
 		item.ProductPriceMod,
