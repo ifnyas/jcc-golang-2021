@@ -35,7 +35,8 @@ func main() {
 
 	// routes
 	router := httprouter.New()
-	router.NotFound = http.FileServer(http.Dir("/public"))
+	router.NotFound = http.FileServer(http.Dir("/static"))
+	router.ServeFiles("/static/*filepath", http.Dir("static"))
 
 	// user
 	router.POST("/api/user", route.PostUser)
