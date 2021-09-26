@@ -35,6 +35,7 @@ func PutSession(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		util.ResponseJSON(w, err, http.StatusInternalServerError)
 		return
 	}
+	oldFormStatusId := theItem[0].StatusId
 
 	// parse form
 	formCourier := r.PostFormValue("courier")
@@ -92,8 +93,8 @@ func PutSession(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 	util.ResponseJSON(w, res, http.StatusOK)
 
-	// create new session if statusId != 0
-	if theItem[0].StatusId != 0 {
+	// create new session if old statusId == 0
+	if oldFormStatusId == 0 {
 		newSession := session.Session{
 			ID:           0,
 			Courier:      "",
