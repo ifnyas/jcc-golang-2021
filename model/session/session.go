@@ -26,10 +26,10 @@ const (
 
 func PostDb(ctx context.Context, item Session) error {
 	queryText := fmt.Sprintf(
-		`INSERT INTO %v (
-			courier, note, delivery_cost, user_id, status_id,
-			created_at, updated_at
-		) values('%v','%v', %v, %v, %v, NOW(), NOW())`,
+		"INSERT INTO %v ("+
+			"courier, note, delivery_cost, user_id, status_id,"+
+			"created_at, updated_at"+
+			") values('%v','%v', %v, %v, %v, NOW(), NOW())",
 		table,
 		item.Courier,
 		item.Note,
@@ -43,13 +43,13 @@ func PostDb(ctx context.Context, item Session) error {
 
 func PutDb(ctx context.Context, item Session) error {
 	queryText := fmt.Sprintf(
-		`UPDATE %v set 
-		courier = '%v',
-		note = '%v',
-		delivery_cost = %v,
-		status_id = %v,
-		updated_at = NOW() 
-		where id = %v`,
+		"UPDATE %v set "+
+			"courier = '%v',"+
+			"note = '%v',"+
+			"delivery_cost = %v,"+
+			"status_id = %v,"+
+			"updated_at = NOW() "+
+			"where id = %v",
 		table,
 		item.Courier,
 		item.Note,
