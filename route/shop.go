@@ -44,7 +44,6 @@ func PostShop(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	if err == nil && theUser[0].RoleId == 1 {
 		item.UserId = formUserIdInt
 	}
-	fmt.Println(item.UserId, formUserIdInt)
 	if theUser[0].RoleId != 1 && item.UserId != formUserIdInt && formUserIdInt != 0 {
 		err := map[string]string{
 			"status": "Unauthorized!",
