@@ -226,7 +226,7 @@ func PutResponse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	// put db
-	if err := review.PutDb(ctx, theItem[0]); err != nil {
+	if err := review.PutResponseDb(ctx, theItem[0]); err != nil {
 		util.ResponseJSON(w, err, http.StatusInternalServerError)
 		return
 	}
