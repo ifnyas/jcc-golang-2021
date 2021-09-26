@@ -117,22 +117,54 @@ func GetSession(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// get id
 	itemId, err := strconv.Atoi(p.ByName("id"))
 	if err != nil {
-		itemId = -1
-	}
-
-	// get param
-	userIdParam := r.URL.Query().Get("user_id")
-	if itemId != -1 {
-		userIdParam = ""
+		util.ResponseJSON(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	// query
+	items, err := session.GetByIdDb(ctx, itemId)
+	if items == nil {
+		err := map[string]string{
+			"status": "Session not found!",
+		}
+		util.ResponseJSON(w, err, http.StatusNotFound)
+		return
+	}
+	if err != nil {
+		util.ResponseJSON(w, err, http.StatusInternalServerError)
+		return
+	}
+
+	// check auth
+	if !user.IsBasicAuthValid(2, items[0].UserId, r, ctx) {
+		err := map[string]string{
+			"status": "Unauthorized!",
+		}
+		util.ResponseJSON(w, err, http.StatusUnauthorized)
+		return
+	}
+
+	// result
+	util.ResponseJSON(w, items, http.StatusOK)
+}
+
+func GetSessionAll(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	// context
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// get param
+	var userIdInt int
+	userIdParam := r.URL.Query().Get("user_id")
+
+	// query
 	var items []session.Session
+	var err error
 	if userIdParam == "" {
-		items, err = session.GetByIdDb(ctx, itemId)
+		items, err = session.GetByIdDb(ctx, -1)
 		if items == nil {
 			err := map[string]string{
-				"status": "Review not found!",
+				"status": "Session not found!",
 			}
 			util.ResponseJSON(w, err, http.StatusNotFound)
 			return
@@ -142,7 +174,7 @@ func GetSession(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			return
 		}
 	} else {
-		userIdInt, err := strconv.Atoi(userIdParam)
+		userIdInt, err = strconv.Atoi(userIdParam)
 		if err != nil {
 			util.ResponseJSON(w, err, http.StatusBadRequest)
 			return
@@ -163,10 +195,10 @@ func GetSession(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	// check auth
 	rule := 2
-	if itemId < 0 && userIdParam == "" {
+	if userIdParam == "" {
 		rule = 1
 	}
-	if !user.IsBasicAuthValid(rule, items[0].UserId, r, ctx) {
+	if !user.IsBasicAuthValid(rule, userIdInt, r, ctx) {
 		err := map[string]string{
 			"status": "Unauthorized!",
 		}

@@ -72,7 +72,7 @@ func main() {
 	router.GET("/api/status", route.GetStatus)
 
 	// session
-	//router.GET("/api/session", route.GetSessionAll)
+	router.GET("/api/session", route.GetSessionAll)
 	router.GET("/api/session/:id", route.GetSession)
 	router.PUT("/api/session/:id", route.PutSession)
 
