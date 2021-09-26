@@ -52,6 +52,9 @@ func PostCart(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	// check auth
 	if !isCartBasicAuthValid(r, ctx, 2, item.SessionId) {
+		err := map[string]string{
+			"status": "Unauthorized!",
+		}
 		util.ResponseJSON(w, err, http.StatusUnauthorized)
 		return
 	}
@@ -121,6 +124,9 @@ func PutCart(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	// check auth
 	if !isCartBasicAuthValid(r, ctx, 2, theItem[0].SessionId) {
+		err := map[string]string{
+			"status": "Unauthorized!",
+		}
 		util.ResponseJSON(w, err, http.StatusUnauthorized)
 		return
 	}
@@ -162,6 +168,9 @@ func DelCart(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	// check auth
 	if !isCartBasicAuthValid(r, ctx, 2, theItem[0].SessionId) {
+		err := map[string]string{
+			"status": "Unauthorized!",
+		}
 		util.ResponseJSON(w, err, http.StatusUnauthorized)
 		return
 	}
@@ -205,6 +214,9 @@ func GetCart(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	// check auth
 	if !isCartBasicAuthValid(r, ctx, 2, items[0].SessionId) {
+		err := map[string]string{
+			"status": "Unauthorized!",
+		}
 		util.ResponseJSON(w, err, http.StatusUnauthorized)
 		return
 	}
@@ -264,6 +276,9 @@ func GetCartAll(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		rule = 1
 	}
 	if !isCartBasicAuthValid(r, ctx, rule, items[0].SessionId) {
+		err := map[string]string{
+			"status": "Unauthorized!",
+		}
 		util.ResponseJSON(w, err, http.StatusUnauthorized)
 		return
 	}
