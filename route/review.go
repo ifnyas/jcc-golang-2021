@@ -229,6 +229,37 @@ func PutResponse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	util.ResponseJSON(w, res, http.StatusOK)
 }
 
+func GetReviewAll(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	// context
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// get param
+	var productIdInt int
+	productIdParam := r.URL.Query().Get("product_id")
+
+	if productIdParam == "" {
+		productIdInt = -1
+	} else {
+		var err error
+		productIdInt, err = strconv.Atoi(productIdParam)
+		if err != nil {
+			util.ResponseJSON(w, err, http.StatusBadRequest)
+			return
+		}
+	}
+
+	// query
+	items, err := review.GetByIdDb(ctx, productIdInt)
+	if err != nil {
+		util.ResponseJSON(w, err, http.StatusInternalServerError)
+		return
+	}
+
+	// result
+	util.ResponseJSON(w, items, http.StatusOK)
+}
+
 func GetReview(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	// context
 	ctx, cancel := context.WithCancel(context.Background())
@@ -240,61 +271,16 @@ func GetReview(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		itemId = -1
 	}
 
-	// get param
-	productIdParam := r.URL.Query().Get("product_id")
-	if itemId != -1 {
-		productIdParam = ""
-	}
-
 	// query
-	var items []review.Review
-	if productIdParam == "" {
-		items, err = review.GetByIdDb(ctx, itemId)
-		if items == nil {
-			err := map[string]string{
-				"status": "Review not found!",
-			}
-			util.ResponseJSON(w, err, http.StatusNotFound)
-			return
-		}
-		if err != nil {
-			util.ResponseJSON(w, err, http.StatusInternalServerError)
-			return
-		}
-	} else {
-		productIdInt, err := strconv.Atoi(productIdParam)
-		if err != nil {
-			util.ResponseJSON(w, err, http.StatusBadRequest)
-			return
-		}
-		items, err = review.GetByProductIdDb(ctx, productIdInt)
-		if items == nil {
-			err := map[string]string{
-				"status": "Review not found!",
-			}
-			util.ResponseJSON(w, err, http.StatusNotFound)
-			return
-		}
-		if err != nil {
-			util.ResponseJSON(w, err, http.StatusInternalServerError)
-			return
-		}
+	items, err := review.GetByIdDb(ctx, itemId)
+	if items == nil {
+		util.ResponseJSON(w, err, http.StatusNotFound)
+		return
 	}
-
-	// check auth
-	/*
-		rule := 2
-		if itemId < 0 && productIdParam == "" {
-			rule = 1
-		}
-		if !user.IsBasicAuthValid(rule, items[0].UserId, r, ctx) {
-			err := map[string]string{
-				"status": "Unauthorized!",
-			}
-			util.ResponseJSON(w, err, http.StatusUnauthorized)
-			return
-		}
-	*/
+	if err == nil {
+		util.ResponseJSON(w, err, http.StatusInternalServerError)
+		return
+	}
 
 	// result
 	util.ResponseJSON(w, items, http.StatusOK)

@@ -28,10 +28,10 @@ const (
 
 func PostDb(ctx context.Context, item Review) error {
 	queryText := fmt.Sprintf(
-		`INSERT INTO %v (
-			note, media_url, rating, user_id,
-			created_at, updated_at
-		) values('%v','%v', %v, %v, NOW(), NOW())`,
+		"INSERT INTO %v ("+
+			"note, media_url, rating, user_id,"+
+			"created_at, updated_at"+
+			") values('%v','%v', %v, %v, NOW(), NOW())",
 		table,
 		item.Note,
 		item.MediaUrl,
@@ -44,12 +44,12 @@ func PostDb(ctx context.Context, item Review) error {
 
 func PutDb(ctx context.Context, item Review) error {
 	queryText := fmt.Sprintf(
-		`UPDATE %v set 
-		note = '%v',
-		media_url = '%v',
-		rating = %v,
-		updated_at = NOW() 
-		where id = %v`,
+		"UPDATE %v set "+
+			"note = '%v',"+
+			"media_url = '%v',"+
+			"rating = %v,"+
+			"updated_at = NOW()"+
+			"where id = %v",
 		table,
 		item.Note,
 		item.MediaUrl,
@@ -62,10 +62,7 @@ func PutDb(ctx context.Context, item Review) error {
 
 func PutResponseDb(ctx context.Context, item Review) error {
 	queryText := fmt.Sprintf(
-		`UPDATE %v set 
-		response = '%v',
-		updated_at = NOW() 
-		where id = %v`,
+		"UPDATE %v set response = '%v', updated_at = NOW() where id = %v",
 		table,
 		item.Response,
 		item.ID,
@@ -106,34 +103,7 @@ func GetByProductIdDb(ctx context.Context, productId int) ([]Review, error) {
 	}
 
 	// parse rows
-	var items []Review
-	for rowQuery.Next() {
-		var item Review
-		var createdAt, updatedAt string
-		if err = rowQuery.Scan(&item.ID,
-			&item.Note,
-			&item.Response,
-			&item.MediaUrl,
-			&item.Rating,
-			&item.UserId,
-			&item.ProductId,
-			&createdAt,
-			&updatedAt); err != nil {
-			return nil, err
-		}
-
-		item.CreatedAt, err = time.Parse(util.LayoutDateTime, createdAt)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		item.UpdatedAt, err = time.Parse(util.LayoutDateTime, updatedAt)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		items = append(items, item)
-	}
+	items := rowQueryNext(rowQuery)
 	return items, nil
 }
 
@@ -156,9 +126,15 @@ func GetByIdDb(ctx context.Context, id int) ([]Review, error) {
 	}
 
 	// parse rows
+	items := rowQueryNext(rowQuery)
+	return items, nil
+}
+
+func rowQueryNext(rowQuery *sql.Rows) []Review {
 	var items []Review
 	for rowQuery.Next() {
 		var item Review
+		var err error
 		var createdAt, updatedAt string
 		if err = rowQuery.Scan(&item.ID,
 			&item.Note,
@@ -169,7 +145,7 @@ func GetByIdDb(ctx context.Context, id int) ([]Review, error) {
 			&item.ProductId,
 			&createdAt,
 			&updatedAt); err != nil {
-			return nil, err
+			log.Fatal(err)
 		}
 
 		item.CreatedAt, err = time.Parse(util.LayoutDateTime, createdAt)
@@ -184,5 +160,5 @@ func GetByIdDb(ctx context.Context, id int) ([]Review, error) {
 
 		items = append(items, item)
 	}
-	return items, nil
+	return items
 }

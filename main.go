@@ -63,6 +63,7 @@ func main() {
 
 	// review
 	router.POST("/api/review", route.PostReview)
+	router.GET("/api/review", route.GetReviewAll)
 	router.GET("/api/review/:id", route.GetReview)
 	router.PUT("/api/review/:id", route.PutReview)
 	router.PUT("/api/review/:id/response", route.PutResponse)
