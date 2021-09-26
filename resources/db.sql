@@ -54,8 +54,8 @@ CREATE TABLE db_golang_yasir.t_product (
 CREATE TABLE db_golang_yasir.t_review (
     id INT auto_increment primary key,
     note VARCHAR(255) not null,
-    response VARCHAR(255),
-    media_url VARCHAR(255),
+    response VARCHAR(255) not null,
+    media_url VARCHAR(255) not null,
     rating INT not null,
     `user_id` INT not null,
     product_id INT not null,
@@ -65,8 +65,8 @@ CREATE TABLE db_golang_yasir.t_review (
 
 CREATE TABLE db_golang_yasir.t_session (
     id INT auto_increment primary key,
-    courier VARCHAR(255),
-    note VARCHAR(255),
+    courier VARCHAR(255) not null,
+    note VARCHAR(255) not null,
     delivery_cost DECIMAL not null,
     `user_id` INT not null,
     status_id INT not null,
@@ -85,7 +85,7 @@ CREATE TABLE db_golang_yasir.t_status (
 CREATE TABLE db_golang_yasir.t_cart (
     id INT auto_increment primary key,
     product_name VARCHAR(255) not null,
-    note VARCHAR(255),
+    note VARCHAR(255) not null,
     product_price DECIMAL not null,
     product_price_mod DECIMAL not null,
     amount INT not null,
