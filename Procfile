@@ -1,1 +1,0 @@
-web: bin/jcc-golang-2021
