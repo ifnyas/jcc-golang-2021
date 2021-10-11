@@ -1,22 +1,14 @@
 package util
 
 import (
-	"context"
-	"database/sql"
 	"encoding/json"
-	"jcc-golang-2021/config"
 	"log"
+	"math"
 	"net/http"
-)
-
-const (
-	LayoutDateTime = "2006-01-02 15:04:05"
 )
 
 func ResponseJSON(w http.ResponseWriter, p interface{}, status int) {
 	encoded, err := json.Marshal(p)
-	w.Header().Set("Content-Type", "application/json")
-
 	if err != nil {
 		http.Error(w, "Oops...", http.StatusBadRequest)
 	}
@@ -26,25 +18,23 @@ func ResponseJSON(w http.ResponseWriter, p interface{}, status int) {
 	w.Write([]byte(encoded))
 }
 
-func ExecDb(ctx context.Context, q string) (sql.Result, error) {
-	// connect to sql
-	db, err := config.MySQL()
+func ErrHandler(err error) {
 	if err != nil {
-		log.Fatal("Can't connect to MySQL", err)
+		log.Fatal(err)
 	}
-
-	// send query
-	res, err := db.ExecContext(ctx, q)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
 }
 
-func QueryDb(ctx context.Context, q string) (*sql.Rows, error) {
-	db, err := config.MySQL()
-	if err != nil {
-		log.Fatal("Cant connect to MySQL", err)
-	}
-	return db.QueryContext(ctx, q)
+func LocBetween(lat float64, lng float64, radius float64) []float64 {
+	earth := 6378.137
+	m := (1 / ((2 * math.Pi / 360) * earth)) / 1000
+
+	rLat := radius * m
+	minLat := lat - rLat
+	maxLat := lat + rLat
+
+	rLng := rLat / math.Cos(lat*(math.Pi/180))
+	minLng := lng - rLng
+	maxLng := lng + rLng
+
+	return []float64{minLat, maxLat, minLng, maxLng}
 }

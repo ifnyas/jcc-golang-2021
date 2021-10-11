@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>JCC Challenge by Ifnyas</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script
+      src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Background Video-->
+    <video
+      class="bg-video"
+      playsinline="playsinline"
+      autoplay="autoplay"
+      muted="muted"
+      loop="loop"
+    >
+      <source src="assets/mp4/bg.mp4" type="video/mp4" />
+    </video>
+    <!-- Masthead-->
+    <div class="masthead">
+      <div class="masthead-content text-white" style="height:inherit;overflow: auto;padding-top: 4rem; padding-bottom: 4rem;">
+        <div class="container-fluid px-4 px-lg-0">
+          <h1 class="fst-italic lh-1 mb-4">
+            The Story
+          </h1>
+          <p class="mt-5">
+            <ul>
+            </ul>
+            I should probably say first that this project will be a "little" different than most.
+             I used Go for the main backend and Google Sheet for the database. Wait, what? Why Google Sheet, you may ask?
+            <br><br>
+            I don't have any fancy setup in my cloud accounts for backend development.
+             You see, I'm not really into the idea of buying a cloud service just to run a SQL Database for a free scholarship project,
+             so I'm looking for an alternative. No, I don't want to use any of that free SQL websites. 
+             I can't even get an account due to a 500 on their site.
+            <br><br>
+            So, I'm trying to make this work with Google Sheet + Apps Script. It's easy to set up,
+             plus I believe this can be a good experience for my future project as everybody use Google Sheet nowadays.
+             As the more lines I coded, I learned why no one used it as their primary database.
+             The database limitations that I'm aware of:
+            <ul>
+              <li>Bad performance. I got the response after 10 secs on average for reading around 15K rows,</li>
+              <li>I have no other idea except it has a truly been slow response</li>
+            </ul>
+            But the best part is, you got a Google Sheet.
+            <br><br>
+            <b>Does this project meet the requirements of the challenge?</b><br>
+            I tried my best to follow the rules:
+            <ul>
+              <li>Use Go as the primary language for the backend,</li>
+              <li>The requirements aren't telling us what we need to use as the database hence the use of Google Sheet,</li>
+              <li>This project has all of the required attributes for every definition,</li>
+              <li>Some of the places are user-generated when the majority comes from a real dataset,</li>
+              <li>Has "/search" route for searching nearby places inside 5 Km radius along with accurate response model,</li>
+              <li>Uploaded to Github and deployed to Heroku</li>
+            </ul>
+            Even if this project doesn't check all the requirements yet,
+             your understanding of my decision is greatly appreciated.
+             I hope you learned something positive from this project as I do.
+             Anyway, thanks for reading this, and have a nice day.
+            <br><br>
+            Regards,
+            <br><br>
+            Ifnyas
+            <br><br><br>
+            <a href="https://s.id/yas-jcccdb" target=”_blank”>See The Database</a><br>
+            <a href="./index.html">Back to Home</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
